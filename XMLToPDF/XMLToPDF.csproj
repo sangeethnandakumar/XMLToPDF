@@ -4,11 +4,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="Cocona" Version="2.0.3" />
 	  <PackageReference Include="DinkToPdf" Version="1.0.8" />
 	  <PackageReference Include="Ghostscript.NET" Version="1.2.3" />
 	  <PackageReference Include="Razor.Templating.Core" Version="1.7.0" />
@@ -21,10 +21,10 @@
 
   <ItemGroup>
     <None Update="gsdll64.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="libwkhtmltox.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

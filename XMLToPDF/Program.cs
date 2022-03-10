@@ -1,22 +1,10 @@
-﻿using XMLToPDF;
+﻿using Cocona;
+using XMLToPDF;
 
-var filesToProcess = BatchHelpers.GetXMlFiles();
-
-foreach (var file in filesToProcess)
+public class Program
 {
-    var filename = Path.GetFileName(file);
-    try
+    public static async Task Main(string[] args)
     {
-        using (var xmlProcessor = new XMLProcessor())
-        {
-            await xmlProcessor.ProcessXML(file, $"{BatchHelpers.GetResourceDir()}\\Output\\{filename}.pdf");
-        }           
+        CoconaApp.Run(async (string xmlPath, string pdfPath) => await new XMLProcessor().ProcessXML(xmlPath, pdfPath));
     }
-    catch(Exception ex)
-    {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("Error for - " + filename);
-        Console.ForegroundColor = ConsoleColor.White;
-    }
-    break;
 }

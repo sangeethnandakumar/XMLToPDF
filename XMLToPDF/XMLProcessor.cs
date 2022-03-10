@@ -1,34 +1,29 @@
-﻿using DinkToPdf;
-using PDF.Layout;
+﻿using PDF.Layout;
 using Razor.Templating.Core;
 using System.Xml.Serialization;
 using XMLToPDF.Helpers;
 
 namespace XMLToPDF
 {
-    public class XMLProcessor : IDisposable
+    public class XMLProcessor
     {
-        public void Dispose()
+        public async Task ProcessXML(string xmlPath, string pdfPath)
         {
-            GC.SuppressFinalize(this);
-        }
+            Console.WriteLine("TASK STARTED - " + Path.GetFileName(xmlPath));
 
-        public async Task ProcessXML(string inputFile, string outputFile)
-        {
-            Console.WriteLine("TASK STARTED - " + Path.GetFileName(inputFile));
             //Reading XML
             Console.WriteLine("Reading XML file");
-            var xml = File.ReadAllText(inputFile);
+            var xml = File.ReadAllText(xmlPath);
 
             //Cleaning XML
             Console.WriteLine("Cleaning XML file");
             xml = XMLHelpers.StripNonStandardNamespaces(xml);
-            File.WriteAllText(inputFile, xml);
+            File.WriteAllText(xmlPath, xml);
 
             //Deserializing XML
             Console.WriteLine("Deserializing XML file");
             XmlSerializer serializer = new XmlSerializer(typeof(OmdCds));
-            using (Stream reader = new FileStream(inputFile, FileMode.Open))
+            using (Stream reader = new FileStream(xmlPath, FileMode.Open))
             {
                 var model = serializer.Deserialize(reader) as OmdCds;
                 //Convert Resources
@@ -43,8 +38,9 @@ namespace XMLToPDF
                         }
                         catch (Exception ex)
                         {
+                            Console.WriteLine(ex);
                             report.Content.Media = null;
-                        }                       
+                        }
                     }
                     else if (report.FileExtensionAndVersion == ".pdf")
                     {
@@ -54,44 +50,17 @@ namespace XMLToPDF
                         }
                         catch (Exception ex)
                         {
+                            Console.WriteLine(ex);
                             report.Content.Media = null;
                         }
                     }
                 }
+
                 //Generate SourceMaps
                 Console.WriteLine("Generating Sourcemaps");
                 var html = await RazorTemplateEngine.RenderAsync("/Theme.cshtml", model);
-                var converter = new BasicConverter(new PdfTools());
-                var options = new HtmlToPdfDocument
-                {
-                    GlobalSettings =
-                     {
-                        ColorMode = ColorMode.Color,
-                        Orientation = Orientation.Portrait,
-                        PaperSize = PaperKind.A4,
-                        Out = outputFile
-                    },
-                    Objects =
-                    {
-                        new ObjectSettings {
-                          PagesCount=true,
-                          HtmlContent = html,
-                          WebSettings = {DefaultEncoding="UTF-8"}
-                        }
-                    }
-                };
 
-                //Build PDF
-                Console.WriteLine("Generating PDF");
-
-                converter.Convert(options);
-                //Build PDF
-                Console.WriteLine("Cleaning Memory");
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine("Completed");
-                Console.ForegroundColor = ConsoleColor.White;
+                PDFEngine.Generate(html, pdfPath);
             }
         }
     }
