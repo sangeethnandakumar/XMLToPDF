@@ -587,7 +587,7 @@
                                         <td>Drug Name</td>
                                         <td>@mat.DrugName</td>
                                     </tr>
-                                     <tr>
+                                    <tr>
                                         <td>Dosage</td>
                                         <td>@mat.Dosage</td>
                                     </tr>
@@ -705,12 +705,21 @@
                                     </tr>
                                     <tr>
                                         <td>Reference Range</td>
-                                        <td>@laboratoryResult.ReferenceRange</td>
+                                        <td>@laboratoryResult.ReferenceRange.ReferenceRangeText</td>
                                     </tr>
-                                    <tr>
-                                        <td>Collection At</td>
-                                        <td>@laboratoryResult.CollectionDateTime.ToString()</td>
-                                    </tr>
+                                    @if (!laboratoryResult.CollectionDateTime.FullDateTime.Equals(default(DateTime)))
+                                    {
+                                        <tr>
+                                            <td>Collection At</td>
+                                            <td>@laboratoryResult.CollectionDateTime.FullDateTime.ToLongDateString()</td>
+                                        </tr>
+                                    }
+                                    else{
+                                        <tr>
+                                            <td>Collection At</td>
+                                            <td>[No Information Available]</td>
+                                        </tr>
+                                    }
                                     <tr>
                                         <td>Result Reveiwer</td>
                                         <td>
@@ -872,7 +881,10 @@
                                     <span class="code">(TIF Image)</span>
                                 </div>
                                 <h2>Source Facility: @report.SourceFacility</h2>
-                                <h3>Report Received: @report.ReceivedDateTime.FullDateTime.ToLongDateString()</h3>
+                                @if (!report.ReceivedDateTime.FullDateTime.Equals(default(DateTime)))
+                                {
+                                    <h3>Report Received: @report.ReceivedDateTime.FullDateTime.ToLongDateString()</h3>
+                                }
                                 <h3>Reviewed By: @report.ReportReviewed?.Name?.FirstName @report.ReportReviewed?.Name?.LastName</h3>
                                 <hr />
                                 <center>

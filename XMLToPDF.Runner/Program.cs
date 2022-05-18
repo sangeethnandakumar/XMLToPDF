@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using XMLToPDF.Runner;
 
-var DIRECTORY = @"D:\XMLto PDF - Upwork E122\Job2\ResourceFiles";
-var APP = @"D:\XMLto PDF - Upwork E122\Job2\XMLToPDF\XMLToPDF\bin\x64\Debug\net6.0\XMLToPDF.exe";
+var DIRECTORY = @"D:\XMLto PDF - Upwork E122\Job3\ResourceFiles";
+var APP = @"D:\XMLto PDF - Upwork E122\Job2\XMLToPDF\XMLToPDF\bin\x64\Release\net6.0\XMLToPDF.exe";
 
 
 var xmlFiles = BatchHelpers.GetXMlFiles(DIRECTORY);
