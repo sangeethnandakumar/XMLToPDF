@@ -449,7 +449,7 @@
                     </tr>
                     <tr>
                         <td>Residential Address</td>
-                        <td>@Demographics.Address.Structured.Line1, @Demographics.Address.Structured.City<br />@Demographics.Address.Structured.CountrySubdivisionCode, ZIP: @Demographics.Address.Structured.PostalZipCode.PostalCode</td>
+                        <td>@Demographics?.Address?.Structured?.Line1, @Demographics?.Address?.Structured?.City<br />@Demographics?.Address?.Structured?.CountrySubdivisionCode, ZIP: @Demographics?.Address?.Structured?.PostalZipCode?.PostalCode</td>
                     </tr>
                 </table>
 
@@ -605,11 +605,11 @@
                                     </tr>
                                     <tr>
                                         <td>Long Term Medication</td>
-                                        <td>@mat.LongTermMedication</td>
+                                        <td>@mat.LongTermMedication.Boolean</td>
                                     </tr>
                                     <tr>
                                         <td>Past Medications</td>
-                                        <td>@mat.PastMedications</td>
+                                        <td>@mat.PastMedications.Boolean</td>
                                     </tr>
                                     <tr>
                                         <td>Prescribed By</td>
@@ -705,9 +705,11 @@
                                     </tr>
                                     <tr>
                                         <td>Reference Range</td>
-                                        <td>@laboratoryResult.ReferenceRange.ReferenceRangeText</td>
+                                        <td>@laboratoryResult?.ReferenceRange?.ReferenceRangeText</td>
                                     </tr>
-                                    @if (!laboratoryResult.CollectionDateTime.FullDateTime.Equals(default(DateTime)))
+                                    
+                                    
+                                    @if (laboratoryResult!=null && laboratoryResult.ReferenceRange != null && !laboratoryResult.CollectionDateTime.FullDateTime.Equals(default(DateTime)))
                                     {
                                         <tr>
                                             <td>Collection At</td>
@@ -720,6 +722,8 @@
                                             <td>[No Information Available]</td>
                                         </tr>
                                     }
+
+
                                     <tr>
                                         <td>Result Reveiwer</td>
                                         <td>
@@ -901,7 +905,7 @@
                                     <span class="code">(PDF Document)</span>
                                 </div>
                                 <h2>Source Facility: @report.SourceFacility</h2>
-                                <h3>Report Received: @report.ReceivedDateTime.FullDateTime.ToLongDateString()</h3>
+                                <h3>Report Received: @report?.ReceivedDateTime?.FullDateTime.ToLongDateString()</h3>
                                 <h3>Reviewed By: @report.ReportReviewed?.Name?.FirstName @report.ReportReviewed?.Name?.LastName</h3>
                                 <hr />
                                 @foreach (var pdfPage in report.Content.PDFPages)
@@ -1007,18 +1011,24 @@
                             var alertsAndSpecialNeeds = Model.PatientRecord.AlertsAndSpecialNeeds;
                             @foreach (var alert in alertsAndSpecialNeeds)
                             {
-                                <h2>@alert.DateActive.FullDate.ToLongDateString()</h2>
-                                <h2>Catageory Summary:</h2>
-                                var categorySummaryLines = alert.CategorySummaryLine.Split("["); ;
-                                <ul>
-                                    @foreach (var line in categorySummaryLines)
-                                    {
-                                        if (!(string.IsNullOrEmpty(@line) || string.IsNullOrWhiteSpace(@line)))
+                                @if (alert.DateActive != null)
+                                {
+                                    <h2>@alert.DateActive.FullDate.ToLongDateString()</h2>
+                                }
+                                @if (alert.CategorySummaryLine != null)
+                                {
+                                    <h2>Catageory Summary:</h2>
+                                    var categorySummaryLines = alert.CategorySummaryLine.Split("["); ;
+                                    <ul>
+                                        @foreach (var line in categorySummaryLines)
                                         {
-                                            <li>@line</li>
+                                            if (!(string.IsNullOrEmpty(@line) || string.IsNullOrWhiteSpace(@line)))
+                                            {
+                                                <li>@line</li>
+                                            }
                                         }
-                                    }
-                                </ul>
+                                    </ul>
+                                }
                                 <h2>Alert Description:</h2>
                                 <table>
                                     <col style="width: 100%;" />

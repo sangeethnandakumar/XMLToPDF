@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics;
 using XMLToPDF.Runner;
 
-var DIRECTORY = @"D:\XMLto PDF - Upwork E122\Job3\ResourceFiles";
-var APP = @"D:\XMLto PDF - Upwork E122\Job2\XMLToPDF\XMLToPDF\bin\x64\Release\net6.0\XMLToPDF.exe";
+var DIRECTORY = @"D:\Kalin\Zip1";
+var APP = @"C:\Users\Sangeeth Nandakumar\source\repos\PDFTools\XMLToPDF\XMLToPDF\bin\Debug\net6.0\XMLToPDF.exe";
 
 
 var xmlFiles = BatchHelpers.GetXMlFiles(DIRECTORY);
 
-foreach (var xml in xmlFiles)
+Parallel.ForEach(xmlFiles, xml =>
 {
     Console.WriteLine("Starting - " + xml);
     var processStartInfo = new ProcessStartInfo
@@ -29,6 +29,6 @@ foreach (var xml in xmlFiles)
     }
 
     process.WaitForExit();
-}
+});
 
 Console.Read();

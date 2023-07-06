@@ -2,7 +2,7 @@
   "profiles": {
     "XMLToPDF": {
       "commandName": "Project",
-      "commandLineArgs": "--xml-path=\"D:\\XMLto PDF - Upwork E122\\Job2\\ResourceFiles\\Allison_KOSCAK_3839_23121976.xml\" --pdf-path=\"D:\\XMLto PDF - Upwork E122\\Job2\\ResourceFiles\\Allison_KOSCAK_3839_23121976.pdf\""
+      "commandLineArgs": "--xml-path=\"D:\\Kalin\\Zip1\\Test\\(BERT) ALBERTUS_VANDERHULST_4371_20071953.xml\" --pdf-path=\"D:\\Kalin\\Zip1\\Test\\(BERT) ALBERTUS_VANDERHULST_4371_20071953.xml.pdf\""
     }
   }
 }
