@@ -8,9 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="ChromeHtmlToPdf" Version="2.6.7" />
 	  <PackageReference Include="Cocona" Version="2.0.3" />
 	  <PackageReference Include="DinkToPdf" Version="1.0.8" />
-	  <PackageReference Include="Ghostscript.NET" Version="1.2.3" />
+	  <PackageReference Include="NPOI" Version="2.6.0" />
+	  <PackageReference Include="QRCoder" Version="1.4.3" />
 	  <PackageReference Include="Razor.Templating.Core" Version="1.7.0" />
 	  <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
@@ -20,11 +22,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="detail.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="group.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="gsdll64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="libwkhtmltox.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logo.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

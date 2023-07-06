@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLToPDF", "XMLToPDF\XMLToP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PDF.Layout", "PDF.Layout\PDF.Layout.csproj", "{94FC8D21-0F77-4CED-8EAC-3ACE993B1B0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMLToPDF.Runner", "XMLToPDF.Runner\XMLToPDF.Runner.csproj", "{65BF6D03-1BCB-4AC5-8E83-4C973990C89C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMLToPDF.Runner", "XMLToPDF.Runner\XMLToPDF.Runner.csproj", "{65BF6D03-1BCB-4AC5-8E83-4C973990C89C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

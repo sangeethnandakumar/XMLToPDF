@@ -1,74 +1,21 @@
-﻿using DinkToPdf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace XMLToPDF
+﻿namespace XMLToPDF
 {
     public static class PDFEngine
     {
         public static void Generate(string html, string pdfPath)
         {
-            var converter = new SynchronizedConverter(new PdfTools());
-
-            converter.PhaseChanged += Converter_PhaseChanged;
-            converter.ProgressChanged += Converter_ProgressChanged;
-            converter.Finished += Converter_Finished;
-            converter.Warning += Converter_Warning;
-            converter.Error += Converter_Error;
-
-            var doc = new HtmlToPdfDocument()
+            using (var converter = new ChromeHtmlToPdfLib.Converter())
             {
-                GlobalSettings = {
-                    ColorMode = ColorMode.Color,
-                    Orientation = Orientation.Portrait,
-                    PaperSize = PaperKind.A4,
-                },
-                Objects = {
-                    new ObjectSettings() {
-                        //PagesCount = true,
-                        HtmlContent = html,
-                        WebSettings = { DefaultEncoding = "utf-8" },
-                        //HeaderSettings = { FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
-                        //FooterSettings = { FontSize = 9, Right = "Page [page] of [toPage]" }
-                    }
-                }
-            };
-
-            byte[] pdf = converter.Convert(doc);
-
-            using (FileStream stream = new FileStream(pdfPath, FileMode.Create))
-            {
-                stream.Write(pdf, 0, pdf.Length);               
+                // Set the pixel dimensions of the HTML content to achieve a DPI of 300
+                converter.SetWindowSize(2550, 3300); // 11 inches * 300 pixels per inch
+                converter.ConvertToPdf(html, pdfPath, new ChromeHtmlToPdfLib.Settings.PageSettings
+                {
+                    PrintBackground = true,
+                    PaperWidth = 8.5, // A4 width in inches
+                    PaperHeight = 11, // A4 height in inches
+                    Scale= 1,
+                });
             }
-        }
-
-        private static void Converter_Error(object sender, DinkToPdf.EventDefinitions.ErrorArgs e)
-        {
-            Console.WriteLine("[ERROR] {0}", e.Message);
-        }
-
-        private static void Converter_Warning(object sender, DinkToPdf.EventDefinitions.WarningArgs e)
-        {
-            Console.WriteLine("[WARN] {0}", e.Message);
-        }
-
-        private static void Converter_Finished(object sender, DinkToPdf.EventDefinitions.FinishedArgs e)
-        {
-            Console.WriteLine("Conversion {0} ", e.Success ? "successful" : "unsucessful");
-            Console.WriteLine("-----------------------------------------------------------------");
-        }
-
-        private static void Converter_ProgressChanged(object sender, DinkToPdf.EventDefinitions.ProgressChangedArgs e)
-        {
-            Console.WriteLine("Progress changed {0}", e.Description);
-        }
-
-        private static void Converter_PhaseChanged(object sender, DinkToPdf.EventDefinitions.PhaseChangedArgs e)
-        {
-            Console.WriteLine("Phase changed {0} - {1}", e.CurrentPhase, e.Description);
         }
     }
 }

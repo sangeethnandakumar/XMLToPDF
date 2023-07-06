@@ -1,1042 +1,192 @@
-﻿@model PDF.Layout.OmdCds
+﻿@model PDF.Layout.PageResources
 
 <!DOCTYPE html>
-
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <style type="text/css">
+         p.uspsBarCode {
+             font-family: USPSIMBCompact; 
+             font-size:32pt !important;
+         }
+          p.header {
+             font-family: "Times New Roman";
+             font-size:21pt !important;
+             margin-bottom: 0rem !important;
+         }
+         p {
+             font-family: "Times New Roman";
+             font-size:24pt !important;
+             margin-bottom: 0rem !important;
+             line-height: 1.2 !important;
+         }
+         p.footer {
+             font-family: "Times New Roman";
+             font-size:20pt !important;
+             margin-bottom: 0rem !important;
+             line-height: 1.2 !important;
+         }
+          h3 {
+             font-family: "Times New Roman";
+             font-weight: bold;
+             margin-top: 55px;
+             text-align: center;
+         }
+         h4 {
+             font-family: "Times New Roman";
+             font-weight: bold;
+             margin-top: 35px;
+             text-align: center;
+              font-size:16pt;
+         }
+         .italic{
+             font-style:italic;
+             font-weight:100;
+             font-size:23pt !important;
+         }
+    </style>
+
+   <style type="text/css">
+        @foreach(var style in Model.Styles)
+        {
+            @style
+        }
+   </style>
+
+   <style>
+        table 
+        {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        th, td 
+        {
+          text-align: left;
+          padding: 8px;
+          margin: 10px;
+          font-family: "Times New Roman";
+          font-size:23pt !important;
+          line-height: 1.2 !important;
+        }
+        tr:nth-child(even) 
+        {
+            background-color: #deddde;
+        }
+</style>
+
 </head>
 <body>
-    <style>
-        .banner {
-            background: rgb(2,0,36);
-            color: yellow;
-            text-align: center;
-            font-size: 2em;
-            font-family: Arial, Helvetica, sans-serif;
-            text-transform: uppercase;
-            padding: 1em;
-            height: 61px;
-            font-size: medium;
-        }
-
-            .banner .code {
-                font-weight: bold;
-                color: white;
-            }
-    </style>
-
-
-    <style>
-        *,
-        *:after,
-        *:before {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            text-decoration: none;
-        }
-
-        :root {
-            --bg_blue: rgb(226, 225, 235);
-            --title_blue: rgb(35, 56, 56);
-        }
-
-        * {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.5em;
-            font-size: 14pt;
-        }
-
-        code {
-            display: block;
-            width: 90%;
-            padding: 20px;
-            margin: auto;
-            font-family: consolas, monospace;
-            background-color: var(--bg_blue);
-            font-size: 12pt;
-        }
-
-        main {
-            padding: 10px;
-            margin-left: 350px;
-        }
-
-        p {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.5em;
-            font-size: 14pt;
-            margin: 20px 0 20px 0;
-            margin-left: 20px;
-        }
-
-        header {
-            border-left: solid 25px;
-            border-bottom: solid;
-            padding-left: 10px;
-            margin-top: 60px;
-            font-weight: 300;
-            color: black;
-            font-size: 20pt;
-        }
-
-        #doc-title {
-            display: block;
-            border: none;
-            margin-top: 15px;
-        }
-
-        h1 {
-            font-size: 34px;
-            margin: 10px;
-            color: var(--title_blue);
-            font-weight: 400;
-        }
-
-        h2 {
-            font-size: 20px;
-            margin: 10px;
-            color: var(--title_blue);
-            font-weight: 400;
-        }
-
-        h3 {
-            font-size: 14px;
-            margin: 10px;
-            color: var(--title_blue);
-            font-weight: 400;
-        }
-
-
-
-        ul li {
-            margin-top: 0.7em;
-            padding-left: 10px;
-            list-style-type: square;
-            margin-left: 40px;
-        }
-
-        #introduction {
-            margin-top: 5px;
-        }
-
-        nav {
-            overflow: auto;
-            position: fixed;
-            width: 330px;
-            background-color: rgb(227, 227, 238);
-            left: 0px;
-            top: 0px;
-            height: 100%;
-            padding-left: 10px;
-            border-right: solid 2px;
-            padding-bottom: 10px;
-        }
-
-            nav > ul > li {
-                margin-left: -10px;
-                padding-left: 25px;
-                list-style-type: none;
-                padding-top: 10px;
-                border-top: solid 0.5px;
-                margin-top: 10px;
-            }
-
-
-
-            nav > ul {
-                margin-top: 30px;
-                padding: 0px;
-            }
-
-        .menu {
-            color: slategray;
-            text-decoration: none;
-        }
-
-        @@media only screen and (max-width: 815px) {
-            #navbar {
-                position: relative;
-                width: 100%;
-                height: 300px;
-                margin: 0px;
-                border: none;
-            }
-
-            main {
-                margin: 0pt;
-                margin-top: 30px;
-            }
-
-            #doc-title {
-                text-align: center;
-            }
-        }
-
-        caption {
-            font-size: 20px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            color: #222;
-        }
-
-        .sp_row {
-            font-weight: normal;
-            margin-top: 10px;
-        }
-
-        pre {
-            white-space: pre-line;
-        }
-
-        img {
-            width: 80% !important;
-        }
-
-    </style>
-
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 97%;
-            margin: 12px;
-            table-layout: fixed;
-        }
-
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-            td:nth-child(2) {
-                background-color: #ffffe6;
-            }
-
-        table.fixed {
-            table-layout: fixed;
-        }
-
-            table.fixed td {
-                overflow: hidden;
-            }
-
-        @@media print {
-            div {
-                break-inside: avoid;
-            }
-
-            table {
-                break-inside: avoid;
-            }
-
-            tr {
-                break-inside: avoid;
-            }
-        }
-
-        @@media only screen {
-            div {
-                break-inside: avoid;
-            }
-
-            table {
-                break-inside: avoid;
-            }
-
-            tr {
-                break-inside: avoid;
-            }
-        }
-
-        @@media only screen {
-            .pagebreak {
-                page-break-before: always;
-            }
-        }
-    </style>
-
-    <style>
-        .header {
-            margin-bottom: 30px;
-        }
-
-        .full-name {
-            font-size: 0px;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-
-        .first-name {
-            font-weight: 700;
-        }
-
-        .last-name {
-            font-weight: 300;
-        }
-
-        .position {
-            font-weight: bold;
-            display: inline-block;
-            margin-right: 10px;
-            text-decoration: underline;
-        }
-
-        .contact-info {
-            margin: 10px;
-        }
-
-        .email,
-        .phone {
-            color: #999;
-            font-weight: 300;
-        }
-
-        .separator {
-            height: 10px;
-            display: inline-block;
-            border-left: 2px solid #999;
-        }
-
-
-        .details {
-            line-height: 20px;
-        }
-
-        .section {
-            margin-bottom: 40px;
-        }
-
-            .section:last-of-type {
-                margin-bottom: 0px;
-            }
-
-        .section__title {
-            letter-spacing: 2px;
-            color: #54AFE4;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .section__list-item {
-            margin-bottom: 40px;
-        }
-
-            .section__list-item:last-of-type {
-                margin-bottom: 0;
-            }
-
-        .left,
-        .right {
-            vertical-align: top;
-            display: inline-block;
-        }
-
-        .left {
-            width: 60%;
-        }
-
-        .right {
-            tex-align: right;
-            width: 39%;
-        }
-
-        .name {
-            font-weight: bold;
-        }
-
-        a {
-            text-decoration: none;
-            color: #000;
-            font-style: italic;
-        }
-
-            a:hover {
-                text-decoration: underline;
-                color: #000;
-            }
-
-        .skills {
-        }
-
-        .skills__item {
-            margin-bottom: 10px;
-        }
-
-            .skills__item .right {
-                input
-
-        {
-            display: none;
-        }
-
-        label {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            background: #C3DEF3;
-            border-radius: 20px;
-            margin-right: 3px;
-        }
-
-        input:checked + label {
-            background: #79A9CE;
-        }
-
-    </style>
-
-    @{
-        var Demographics = Model.PatientRecord.Demographics;
-    }
-
-    <div class="container">
-        <main id="main-doc">
-
-
-            <h1>@Demographics.Names.NamePrefix @Demographics.Names.LegalName.FirstName.Part  @Demographics.Names.LegalName.LastName.Part</h1>
-            <h2>@Demographics.Email</h2>
-
-            <div class="contact-info">
-                <span class="email">DOB: </span>
-                <span class="email-val">@Demographics.DateOfBirth.ToLongDateString()</span>
-                <span class="separator"></span>
-                <span class="phone">Person Status Date: </span>
-                <span class="phone-val">@Demographics.PersonStatusDate.ToLongDateString()</span>
-            </div>
-
-
-            <section class="main-section">
-                <header>Demographics</header>
-
-                <br />
-                <h2>Health Card Info</h2>
-                <hr />
-                <table>
-                    <col style="width: 40%;" />
-                    <col style="width: 60%;" />
-                    <tr>
-                        <td>Card Number</td>
-                        <td>#@Demographics.HealthCard?.Number (@Demographics.HealthCard?.ProvinceCode)</td>
-                    </tr>
-                    <tr>
-                        <td>Expiry</td>
-                        <td>@Demographics.HealthCard?.Expirydate.ToLongDateString()</td>
-                    </tr>
-                    <tr>
-                        <td>Card Version</td>
-                        <td>@Demographics.HealthCard?.Version</td>
-                    </tr>
-                </table>
-
-                <h2>Personal Info</h2>
-                <hr />
-                <table>
-                    <col style="width: 40%;" />
-                    <col style="width: 60%;" />
-                    <tr>
-                        <td>Gender</td>
-                        <td>@Demographics.Gender</td>
-                    </tr>
-                    <tr>
-                        <td>Vendor ID</td>
-                        <td>@Demographics.UniqueVendorIdSequence</td>
-                    </tr>
-                    <tr>
-                        <td>Chart Number</td>
-                        <td>@Demographics.ChartNumber</td>
-                    </tr>
-                    <tr>
-                        <td>Residential Address</td>
-                        <td>@Demographics.Address.Structured.Line1, @Demographics.Address.Structured.City<br />@Demographics.Address.Structured.CountrySubdivisionCode, ZIP: @Demographics.Address.Structured.PostalZipCode.PostalCode</td>
-                    </tr>
-                </table>
-
-            </section>
-
-            <!-- FAMILY HISTORY -->
-            @if (Model.PatientRecord.FamilyHistory != null)
-            {
-                <section class="main-section">
-                    <header>Family History</header>
-                    <h2>Problem Diagnosis Procedure Description: </h2>
-                    <div style="margin-top:20px">
-                        @{
-                            var problemDiagnosisProcedureDescription = Model.PatientRecord.FamilyHistory.ProblemDiagnosisProcedureDescription.Split("\n");
-                            <ul>
-                                @foreach (var line in problemDiagnosisProcedureDescription)
-                                {
-                                    <li>@line</li>
-                                }
-                            </ul>
-                        }
-                    </div>
-                </section>
-            }
-
-            <!-- PAST HEALTH INFO -->
-            @if (Model.PatientRecord.PastHealth != null && Model.PatientRecord.PastHealth.Count > 0)
-            {
-                <section class="main-section">
-                    <header>Past Health Info</header>
-                    <div style="margin-top:20px">
-                        @{
-                            var pastHealths = Model.PatientRecord.PastHealth;
-                            @foreach (var pastHealth in pastHealths)
-                            {
-                                <h2>Past Health Problem Description Or Procedures: </h2>
-                                var pastHealthProblemDescriptionOrProcedures = pastHealth.PastHealthProblemDescriptionOrProcedures.Split("\n"); ;
-                                <ul>
-                                    @foreach (var line in pastHealthProblemDescriptionOrProcedures)
-                                    {
-                                        <li>@line</li>
-                                    }
-                                </ul>
-                                <table>
-                                    <col style="width: 100%;" />
-                                    <tr>
-                                        <td><b>Notes:</b><br />@pastHealth.Notes</td>
-                                    </tr>
-                                </table>
-
-                                <hr />
-                                <br />
-                            }
-                        }
-                    </div>
-                </section>
-            }
-
-            <!-- PROBLEMS -->
-            @if (Model.PatientRecord.ProblemList != null && Model.PatientRecord.ProblemList.Count > 0)
-            {
-                <section class="main-section">
-                    <header>Problems</header>
-                    <div style="margin-top:20px">
-                        @{
-                            var problemLists = Model.PatientRecord.ProblemList;
-                            @foreach (var problemList in problemLists)
-                            {
-                                <h2>Problem Diagnosis Description (<i>OnSet Date: @problemList.OnsetDate.FullDate.ToShortDateString()</i>): </h2>
-                                <h3>OnSet Date: @problemList.OnsetDate.FullDate.ToShortDateString()</h3>
-                                <h3>Problem Status: @problemList.ProblemStatus</h3>
-                                var problemDiagnosisDescription = problemList.ProblemDiagnosisDescription.Split("; "); ;
-                                <ul>
-                                    @foreach (var line in problemDiagnosisDescription)
-                                    {
-                                        <li>@line</li>
-                                    }
-                                </ul>
-                                <table>
-                                    <col style="width: 100%;" />
-                                    <tr>
-                                        <td><b>Notes:</b><br />@problemList.Notes</td>
-                                    </tr>
-                                </table>
-
-                                <hr />
-                                <br />
-                            }
-                        }
-                    </div>
-                </section>
-            }
-
-            <!-- Allergy And Adverse Reactions -->
-            @if (Model.PatientRecord.AllergiesAndAdverseReactions != null)
-            {
-                <section class="main-section">
-                    <header>Allergy And Adverse Reactions</header>
-                    <div style="margin-top:20px">
-                        @{
-                            var allergy = Model.PatientRecord.AllergiesAndAdverseReactions;
-
-                            <h2>Offending Agent Description:</h2>
-                            <table>
-                                <col style="width: 100%;" />
-                                <tr>
-                                    <td><b>Agent Desc:</b><br />@allergy.OffendingAgentDescription</td>
-                                </tr>
-                            </table>
-                            <h2>Property Of Offending Agent:</h2>
-                            <p>@allergy.PropertyOfOffendingAgent</p>
-                            <h3>Date: @allergy.RecordedDate.FullDate.ToLongDateString()</h3>
-                        }
-                    </div>
-                </section>
-            }
-
-            <!-- MEDICATION AND TREATMENT -->
-            @if (Model.PatientRecord.MedicationsAndTreatments != null && Model.PatientRecord.MedicationsAndTreatments.Count > 0)
-            {
-                <section class="main-section">
-                    <header>Medications And Treatments</header>
-
-                    <div style="margin-top:20px">
-                        @{
-                            var medicationsAndTreatments = Model.PatientRecord.MedicationsAndTreatments;
-                            @foreach (var mat in medicationsAndTreatments)
-                            {
-                                <h2>Prescription:</h2>
-                                <hr />
-                                <table>
-                                    <col style="width: 40%;" />
-                                    <col style="width: 60%;" />
-                                    <tr>
-                                        <td>Drug Name</td>
-                                        <td>@mat.DrugName</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dosage</td>
-                                        <td>@mat.Dosage</td>
-                                    </tr>
-                                    <tr>
-                                        <td>No: Of Refills</td>
-                                        <td>@mat.NumberOfRefills</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Frequency</td>
-                                        <td>@mat.Frequency</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Route</td>
-                                        <td>@mat.Route</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Long Term Medication</td>
-                                        <td>@mat.LongTermMedication</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Past Medications</td>
-                                        <td>@mat.PastMedications</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Prescribed By</td>
-                                        <td>@mat.PrescribedBy.Name.FirstName @mat.PrescribedBy.Name.LastName (@mat.PrescribedBy.OHIPPhysicianId)</td>
-                                    </tr>
-                                </table>
-                            }
-                        }
-                    </div>
-                </section>
-            }
-
-            <!-- IMMUNIZATION -->
-            @if (Model.PatientRecord.Immunizations != null && Model.PatientRecord.Immunizations.Count > 0)
-            {
-                <section class="main-section">
-                    <header>Immunizations</header>
-
-                    <div style="margin-top:20px">
-                        @{
-                            var immunizations = Model.PatientRecord.Immunizations;
-                            @foreach (var immunization in immunizations)
-                            {
-                                <h2>Immunization:</h2>
-                                <hr />
-                                <table>
-                                    <col style="width: 40%;" />
-                                    <col style="width: 60%;" />
-                                    <tr>
-                                        <td>Immunization Name</td>
-                                        <td>@immunization.ImmunizationName</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Immunization Site</td>
-                                        <td>@immunization.Site</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Immunization Dose</td>
-                                        <td>@immunization.Dose</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Immunization Date</td>
-                                        <td>@immunization.Date.FullDate.ToLongDateString()</td>
-                                    </tr>
-                                </table>
-                                <table>
-                                    <col style="width: 100%;" />
-                                    <tr>
-                                        <td><b>Notes:</b><br />@immunization.Notes</td>
-                                    </tr>
-                                </table>
-                            }
-                        }
-                    </div>
-                </section>
-            }
-
-            <!-- LABORATORY RESULT -->
-            @if (Model.PatientRecord.LaboratoryResults != null && Model.PatientRecord.LaboratoryResults.Count > 0)
-            {
-                <section class="main-section">
-                    <header>Laboratory Results</header>
-
-                    <div style="margin-top:20px">
-                        @{
-                            var laboratoryResults = Model.PatientRecord.LaboratoryResults;
-                            @foreach (var laboratoryResult in laboratoryResults)
-                            {
-                                <h2>Laboratory:</h2>
-                                <hr />
-                                <table>
-                                    <col style="width: 40%;" />
-                                    <col style="width: 60%;" />
-                                    <tr>
-                                        <td>Lab Name</td>
-                                        <td>@laboratoryResult.LaboratoryName</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Test Name (Reported By lab)</td>
-                                        <td>@laboratoryResult.TestNameReportedByLab</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lab Test Code</td>
-                                        <td>@laboratoryResult.LabTestCode</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Accession Number</td>
-                                        <td>@laboratoryResult.AccessionNumber</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Result</td>
-                                        <td>@laboratoryResult.Result.Value @laboratoryResult.Result.UnitOfMeasure</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Reference Range</td>
-                                        <td>@laboratoryResult.ReferenceRange.ReferenceRangeText</td>
-                                    </tr>
-                                    @if (!laboratoryResult.CollectionDateTime.FullDateTime.Equals(default(DateTime)))
-                                    {
-                                        <tr>
-                                            <td>Collection At</td>
-                                            <td>@laboratoryResult.CollectionDateTime.FullDateTime.ToLongDateString()</td>
-                                        </tr>
-                                    }
-                                    else{
-                                        <tr>
-                                            <td>Collection At</td>
-                                            <td>[No Information Available]</td>
-                                        </tr>
-                                    }
-                                    <tr>
-                                        <td>Result Reveiwer</td>
-                                        <td>
-                                            <table>
-                                                <col style="width: 40%;" />
-                                                <col style="width: 60%;" />
-                                                <tr>
-                                                    <td>Reviewer</td>
-                                                    <td>@laboratoryResult.ResultReviewer?.Name.FirstName @laboratoryResult.ResultReviewer?.Name.LastName</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Reviewed On</td>
-                                                    <td>@laboratoryResult.ResultReviewer?.DateTimeResultReviewed.FullDateTime.ToLongDateString()</td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Result Normal Abnormal Flag</td>
-                                        <td>@laboratoryResult.ResultNormalAbnormalFlag.ResultNormalAbnormalFlagAsEnum</td>
-                                    </tr>
-                                </table>
-                                <table>
-                                    <col style="width: 100%;" />
-                                    <tr>
-                                        <td><b>Notes From Lab:</b><br />@laboratoryResult.NotesFromLab</td>
-                                    </tr>
-                                </table>
-                            }
-                        }
-                    </div>
-                </section>
-            }
-
-            <!-- APPTS -->
-            @if (Model.PatientRecord.Appointments != null && Model.PatientRecord.Appointments.Count > 0)
-            {
-                <section class="main-section">
-                    <header>Appoinments</header>
-
-                    <div style="margin-top:20px">
-                        @{
-                            var appointments = Model.PatientRecord.Appointments;
-                            @foreach (var appt in appointments)
-                            {
-                                <h2>Appoinment Detail:</h2>
-                                <hr />
-                                <table>
-                                    <col style="width: 40%;" />
-                                    <col style="width: 60%;" />
-                                    <tr>
-                                        <td>Appoinment Time</td>
-                                        <td>@appt.AppointmentTime</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Appoinment Duration</td>
-                                        <td>@appt.Duration</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Appoinment Status</td>
-                                        <td>@appt.AppointmentStatus</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Appoinment Date</td>
-                                        <td>@appt.AppointmentDate.FullDate.ToLongDateString()</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Provider</td>
-                                        <td>@appt.Provider.Name.FirstName @appt.Provider.Name.LastName</td>
-                                    </tr>
-                                </table>
-                                <table>
-                                    <col style="width: 100%;" />
-                                    <tr>
-                                        <td><b>Appoinment Notes:</b><br />@appt.AppointmentNotes</td>
-                                    </tr>
-                                </table>
-                            }
-                        }
-                    </div>
-                </section>
-            }
-
-            <!-- CLINICAL NOTES -->
-            @if (Model.PatientRecord.ClinicalNotes != null && Model.PatientRecord.ClinicalNotes.Count > 0)
-            {
-                <section class="main-section">
-                    <header>Clinical Notes</header>
-
-                    <div style="margin-top:20px">
-                        @{
-                            var notes = Model.PatientRecord.ClinicalNotes;
-                            @foreach (var note in notes)
-                            {
-                                <h2>My Clinical Notes:</h2>
-                                <table>
-                                    <col style="width: 100%;" />
-                                    <tr>
-                                        <td><b>Note:</b><br /><pre>@note.MyClinicalNotesContent</pre></td>
-                                    </tr>
-                                </table>
-
-                                <h2>Dates:</h2>
-                                <table>
-                                    <col style="width: 40%;" />
-                                    <col style="width: 60%;" />
-                                    <tr>
-                                        <td>Event Date</td>
-                                        <td>@note.EventDateTime.FullDateTime</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Entered Date</td>
-                                        <td>@note.EnteredDateTime?.FullDateTime</td>
-                                    </tr>
-                                </table>
-
-                                <h2>Participating Providers:</h2>
-                                @foreach (var providers in note.ParticipatingProviders)
-                                {
-                                    <table>
-                                        <col style="width: 40%;" />
-                                        <col style="width: 60%;" />
-                                        <tr>
-                                            <td>Full Name</td>
-                                            <td>@providers.Name.FirstName @providers.Name.LastName</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Physician ID</td>
-                                            <td>@providers.OHIPPhysicianId</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Full Date</td>
-                                            <td>@providers.DateTimeNoteCreated.FullDateTime</td>
-                                        </tr>
-                                    </table>
-                                }
-
-                            }
-                        }
-                    </div>
-                </section>
-            }
-
-            <!-- REPORTS RECEIVED -->
-            @if (Model.PatientRecord.ReportsReceived != null && Model.PatientRecord.ReportsReceived.Count > 0)
-            {
-                <div class="pagebreak"> </div>
-                <section class="main-section">
-                    <header>Reports Received</header>
-
-                    @{
-                        var reports = Model.PatientRecord.ReportsReceived;
-                        @foreach (var report in reports)
-                        {
-                            if (report.FileExtensionAndVersion == ".TIF")
-                            {
-                                <div class="banner">
-                                    @report.Class / @report.SubClass
-                                    <span class="code">(TIF Image)</span>
-                                </div>
-                                <h2>Source Facility: @report.SourceFacility</h2>
-                                @if (!report.ReceivedDateTime.FullDateTime.Equals(default(DateTime)))
-                                {
-                                    <h3>Report Received: @report.ReceivedDateTime.FullDateTime.ToLongDateString()</h3>
-                                }
-                                <h3>Reviewed By: @report.ReportReviewed?.Name?.FirstName @report.ReportReviewed?.Name?.LastName</h3>
-                                <hr />
-                                <center>
-                                    @if (report.Content.Media != null)
-                                    {
-                                        <img src="data:image/jpeg;base64, @report.Content.Media" />
-                                    }
-                                </center>
-                            }
-                            else if (report.FileExtensionAndVersion == ".pdf")
-                            {
-                                <div class="banner">
-                                    @report.Class / @report.SubClass
-                                    <span class="code">(PDF Document)</span>
-                                </div>
-                                <h2>Source Facility: @report.SourceFacility</h2>
-                                <h3>Report Received: @report.ReceivedDateTime.FullDateTime.ToLongDateString()</h3>
-                                <h3>Reviewed By: @report.ReportReviewed?.Name?.FirstName @report.ReportReviewed?.Name?.LastName</h3>
-                                <hr />
-                                @foreach (var pdfPage in report.Content.PDFPages)
-                                {
-                                    <center>
-                                        @if (report.Content.Media != null)
-                                        {
-                                            <img src="data:image/jpeg;base64, @pdfPage" />
-                                        }
-                                    </center>
-                                }
-                            }
-                            <div class="pagebreak"> </div>
-                        }
-                    }
-                </section>
-            }
-
-            <!-- CARE ELEMENTS -->
-            @if (Model.PatientRecord.CareElements != null)
-            {
-                <section class="main-section">
-                    <header>Care Elements</header>
-                    <div style="margin-top:20px">
-                        @{
-                            <h2>Weight Data:</h2>
-                            <hr />
-                            var weights = Model.PatientRecord.CareElements.Weight;
-                            <table>
-                                <col style="width: 40%;" />
-                                <col style="width: 40%;" />
-                                <col style="width: 20%;" />
-                                <tr>
-                                    <td>Weight</td>
-                                    <td>Measuring Unit</td>
-                                    <td>Date</td>
-                                </tr>
-                                @foreach (var weight in weights)
-                                {
-                                    <tr>
-                                        <td>@weight.Weight</td>
-                                        <td>@weight.WeightUnit</td>
-                                        <td>@weight.Date.ToLongDateString()</td>
-                                    </tr>
-                                }
-                            </table>
-                            <h2>Height Data:</h2>
-                            <hr />
-                            var heights = Model.PatientRecord.CareElements.Height;
-                            <table>
-                                <col style="width: 40%;" />
-                                <col style="width: 40%;" />
-                                <col style="width: 20%;" />
-                                <tr>
-                                    <td>Height</td>
-                                    <td>Measuring Unit</td>
-                                    <td>Date</td>
-                                </tr>
-                                @foreach (var height in heights)
-                                {
-                                    <tr>
-                                        <td>@height.Height</td>
-                                        <td>@height.HeightUnit</td>
-                                        <td>@height.Date.ToLongDateString()</td>
-                                    </tr>
-                                }
-                            </table>
-                            <h2>Blood Preassure Data:</h2>
-                            <hr />
-                            var bloodPressure = Model.PatientRecord.CareElements.BloodPressure;
-                            <table>
-                                <col style="width: 40%;" />
-                                <col style="width: 40%;" />
-                                <col style="width: 20%;" />
-                                <tr>
-                                    <td>Systolic BP</td>
-                                    <td>Diastolic BP</td>
-                                    <td>Measuring Unit</td>
-                                    <td>Date</td>
-                                </tr>
-                                @foreach (var bp in bloodPressure)
-                                {
-                                    <tr>
-                                        <td>@bp.SystolicBP</td>
-                                        <td>@bp.DiastolicBP</td>
-                                        <td>@bp.BPUnit</td>
-                                        <td>@bp.Date.ToLongDateString()</td>
-                                    </tr>
-                                }
-                            </table>
-                        }
-                    </div>
-                </section>
-            }
-
-            <!-- ALERTS AND SPECIAL NEEDS -->
-            @if (Model.PatientRecord.AlertsAndSpecialNeeds != null && Model.PatientRecord.AlertsAndSpecialNeeds.Count > 0)
-            {
-                <section class="main-section">
-                    <header>Alerts And Special Needs</header>
-                    <div style="margin-top:20px">
-                        @{
-                            var alertsAndSpecialNeeds = Model.PatientRecord.AlertsAndSpecialNeeds;
-                            @foreach (var alert in alertsAndSpecialNeeds)
-                            {
-                                <h2>@alert.DateActive.FullDate.ToLongDateString()</h2>
-                                <h2>Catageory Summary:</h2>
-                                var categorySummaryLines = alert.CategorySummaryLine.Split("["); ;
-                                <ul>
-                                    @foreach (var line in categorySummaryLines)
-                                    {
-                                        if (!(string.IsNullOrEmpty(@line) || string.IsNullOrWhiteSpace(@line)))
-                                        {
-                                            <li>@line</li>
-                                        }
-                                    }
-                                </ul>
-                                <h2>Alert Description:</h2>
-                                <table>
-                                    <col style="width: 100%;" />
-                                    <tr>
-                                        <td><b>Desc:</b><br />@alert.AlertDescription</td>
-                                    </tr>
-                                </table>
-
-                                <hr />
-                                <br />
-                            }
-                        }
-                    </div>
-                </section>
-            }
-
-        </main>
+    
+    <div style="position: fixed; left: 0px; top: 2150px; width: 100%; transform-origin: bottom left;">
+        <p class="footer" style="margin: 0; text-align: left; white-space:pre">Donations Receipt #@Model.FinancialStatement.ReceiptID.ToUpper()                        Produced by Tzedokos App - https://ahavastzedokos.com                                        Page 1 of 1</p>
+      </div>
+
+    <div class="container-fluid">
+
+         <div class="row" style="margin-top:20px !important">
+      <div class="col-md-1" style="padding-left: 0px !important;">
+            <img width="150" src="data:image/jpg;base64,@Model.Images["logo"]" />
+        </div>
+        <div class="col-md-11" style="padding-left:25px; margin:0px;">
+            <p class="header" style="margin-top:12px; font-size:35px !important">Ahavas Tzedokos</p>
+            <p class="header">TaxID# 81-3148868</p>
+            <p class="header">Shluchei Mitzva • Zichron Shlotmo • Tomchei Tzedaka • Bais Yisroel • Botoshan • Ahavas Yisroel • Chasadim Tovim</p>
+            <p class="header">326 3rd St, Lakewood, New Jersey 08701 | (347) 429-5000</p>
+        </div>
+      </div>
+
+      <hr/>
+
+      <h3 style="font-size:45px">Donations Receipt - @Model.FinancialStatement.ReceiptID.ToUpper()</h3>
+
+      <div class="row mt-6" style="margin-top:108px">
+      <div style="position: absolute; left: 0; top: 0; height: 100%; width: 50px; padding: 30px 0; background-color: black; transform-origin: top left; transform: rotate(-90deg);">
+        <p style="font-style: italic; margin: 0; text-align: center;">Vertical Text</p>
+      </div>
+      <div class="col-md-9" style="padding-left:145px">
+            <p style="position:absolute; font-style: italic; color: dimgray; transform: rotate(-90deg);top:75px; left:85px; font-size:15px !important">@Model.FinancialStatement.TraySort</p>
+            <p>@Model.FinancialStatement.FullName</p>
+            <p>@Model.FinancialStatement.AddressLine1</p>
+            <p>@Model.FinancialStatement.City @Model.FinancialStatement.State @Model.FinancialStatement.ZIPCode</p>
+            <p class="uspsBarCode">@Model.FinancialStatement.IMBarcode</p>
+        </div>
+        <div class="col-md-3" style="padding-left:115px">
+             <p>Receipt: @Model.FinancialStatement.ReceiptID.ToUpper()</p>
+        </div>
+      </div>
+
+
+      <div class="row mt-6" style="margin-top:100px !important;">
+      <div class="col-md-12">
+            <p style="font-weight:600; font-size:35px !important">@Model.FinancialStatement.FullName</p>
+            <p style="margin-top:30px">For your records, to follow represents a receipt for your kind and generous donations pledged in Fiscal Year 2022</p>          
+      </div>      
+       <div class="col-md-12 mt-4" style="margin-top:65px !important">
+            <p>Please also send us your current email address so we may be efficient with our records and our communication
+with you. To do so, simply send us your email and contact detail updates to ahavastzedokos@gmail.com
+or send a text to (347) 429-5000. We also welcome any questions or comments by either email or phone.
+</p>       
+      </div> 
     </div>
+
+
+      <div class="row mt-6" style="margin-top:80px !important">
+      <div class="col-md-9">
+            <p>Alternatively, as an additional courtesy, you may use the QR Code provided here
+to update your contact information and to review your donation history:
+</p>
+        </div>
+        <div class="col-md-3">
+            <img  width="300" src="data:image/png;base64,@Model.Images["qrCode"]"/>
+        </div>
+      </div>
+      
+      <div class="row mt-4" style="margin-top:40px">
+      <div class="col-md-12">
+     
+      <table>
+
+      <tr>
+      <th>Date</th>
+      <th>Check #</th>
+      <th>Amount</th>
+      </tr>
+
+      @foreach(var payment in Model.FinancialStatement.Payments)
+        {
+          <tr>
+              <td>@payment.Date.Month/@payment.Date.Day/@payment.Date.Year</td>
+              <td>@payment.CheckNumber</td>
+              <td>$@payment.Amount</td>
+          </tr>
+        } 
+
+      <tr style="background-color: #ffff;">
+      <td style="font-weight:600 !important; font-size: 40px !important">Total</td>
+      <td></td>
+      <td>$@Model.FinancialStatement.Payments.Sum(x=>x.Amount)</td>
+      </tr>
+
+      </table>
+      </div>
+
+      </div>
+
+       <h4 style="font-size:28px; margin-top:100px">Thank you for your support! Your generous contributions have helped families and individuals in need. On behalf of everyone
+here, including those who were served directly through your care and concern, thank you once more. May Hashem bless you with
+bountiful bracha and parnassa, gezinterheit!
+</h4>
+
+   <h3 class="italic" style="font-size:25px"> No goods or services of any value were or will be transferred to you in connetction with these donations.
+ <br />Please keep this written acknowledgment of your donations for your tax records.
+
+</h3>
+
+    <div/>
+
 
 </body>
 </html>
