@@ -59,7 +59,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "Number")]
-		public double Number { get; set; }
+		public string Number { get; set; }
 
 		[XmlElement(ElementName = "ProvinceCode")]
 		public string ProvinceCode { get; set; }
@@ -68,7 +68,7 @@ namespace PDF.Layout
 		public string Version { get; set; }
 
 		[XmlElement(ElementName = "Expirydate")]
-		public DateTime Expirydate { get; set; }
+		public DateTime? Expirydate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "PostalZipCode")]
@@ -135,7 +135,7 @@ namespace PDF.Layout
 		public string EnrollmentStatus { get; set; }
 
 		[XmlElement(ElementName = "EnrollmentDate")]
-		public DateTime EnrollmentDate { get; set; }
+		public DateTime? EnrollmentDate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "Name")]
@@ -187,7 +187,7 @@ namespace PDF.Layout
 		public Names Names { get; set; }
 
 		[XmlElement(ElementName = "DateOfBirth")]
-		public DateTime DateOfBirth { get; set; }
+		public string DateOfBirth { get; set; }
 
 		[XmlElement(ElementName = "HealthCard")]
 		public HealthCard HealthCard { get; set; }
@@ -226,7 +226,7 @@ namespace PDF.Layout
 		public PersonStatusCode PersonStatusCode { get; set; }
 
 		[XmlElement(ElementName = "PersonStatusDate")]
-		public DateTime PersonStatusDate { get; set; }
+		public DateTime? PersonStatusDate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "FamilyHistory")]
@@ -265,7 +265,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDate")]
-		public DateTime FullDate { get; set; }
+		public DateTime? FullDate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "OnsetDate")]
@@ -273,7 +273,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDate")]
-		public DateTime FullDate { get; set; }
+		public DateTime? FullDate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "ProblemList")]
@@ -301,7 +301,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDate")]
-		public DateTime FullDate { get; set; }
+		public DateTime? FullDate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "AllergiesAndAdverseReactions")]
@@ -326,7 +326,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDate")]
-		public DateTime FullDate { get; set; }
+		public DateTime? FullDate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "Strength")]
@@ -394,7 +394,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDate")]
-		public DateTime FullDate { get; set; }
+		public DateTime? FullDate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "PrescribedBy")]
@@ -404,11 +404,11 @@ namespace PDF.Layout
 		[XmlElement(ElementName = "Name")]
 		public Name Name { get; set; }
 
-		[XmlElement(ElementName = "OHIPPhysicianId")]
-		public int OHIPPhysicianId { get; set; }
-	}
+        [XmlElement(ElementName = "OHIPPhysicianId")]
+        public string OHIPPhysicianId { get; set; }
+    }
 
-	[XmlRoot(ElementName = "MedicationsAndTreatments")]
+    [XmlRoot(ElementName = "MedicationsAndTreatments")]
 	public class MedicationsAndTreatments
 	{
 
@@ -454,7 +454,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDate")]
-		public DateTime FullDate { get; set; }
+		public DateTime? FullDate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "RefusedFlag")]
@@ -527,7 +527,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDateTime")]
-		public DateTime FullDateTime { get; set; }
+		public DateTime? FullDateTime { get; set; }
 	}
 
 	[XmlRoot(ElementName = "DateTimeResultReviewed")]
@@ -535,7 +535,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDateTime")]
-		public DateTime FullDateTime { get; set; }
+		public DateTime? FullDateTime { get; set; }
 	}
 
 	[XmlRoot(ElementName = "ResultReviewer")]
@@ -598,7 +598,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDateTime")]
-		public DateTime FullDateTime { get; set; }
+		public DateTime? FullDateTime { get; set; }
 	}
 
 	[XmlRoot(ElementName = "AppointmentDate")]
@@ -606,7 +606,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDate")]
-		public DateTime FullDate { get; set; }
+		public DateTime? FullDate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "Provider")]
@@ -625,7 +625,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "AppointmentTime")]
-		public DateTime AppointmentTime { get; set; }
+		public DateTime? AppointmentTime { get; set; }
 
 		[XmlElement(ElementName = "Duration")]
 		public string Duration { get; set; }
@@ -651,7 +651,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDateTime")]
-		public DateTime FullDateTime { get; set; }
+		public DateTime? FullDateTime { get; set; }
 	}
 
 	[XmlRoot(ElementName = "EnteredDateTime")]
@@ -659,7 +659,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDateTime")]
-		public DateTime FullDateTime { get; set; }
+		public DateTime? FullDateTime { get; set; }
 	}
 
 	[XmlRoot(ElementName = "DateTimeNoteCreated")]
@@ -667,7 +667,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDateTime")]
-		public DateTime FullDateTime { get; set; }
+		public DateTime? FullDateTime { get; set; }
 	}
 
 	[XmlRoot(ElementName = "ParticipatingProviders")]
@@ -709,7 +709,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDateTime")]
-		public DateTime FullDateTime { get; set; }
+		public DateTime? FullDateTime { get; set; }
 	}
 
 	[XmlRoot(ElementName = "NoteReviewer")]
@@ -740,7 +740,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDateTime")]
-		public DateTime FullDateTime { get; set; }
+		public DateTime? FullDateTime { get; set; }
 	}
 
 	[XmlRoot(ElementName = "AuthorName")]
@@ -802,7 +802,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDate")]
-		public DateTime FullDate { get; set; }
+		public DateTime? FullDate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "ReportReviewed")]
@@ -824,13 +824,13 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "Weight")]
-		public double Weight { get; set; }
+		public string Weight { get; set; }
 
 		[XmlElement(ElementName = "WeightUnit")]
 		public string WeightUnit { get; set; }
 
 		[XmlElement(ElementName = "Date")]
-		public DateTime Date { get; set; }
+		public DateTime? Date { get; set; }
 	}
 
 	[XmlRoot(ElementName = "Height")]
@@ -844,7 +844,7 @@ namespace PDF.Layout
 		public string HeightUnit { get; set; }
 
 		[XmlElement(ElementName = "Date")]
-		public DateTime Date { get; set; }
+		public DateTime? Date { get; set; }
 	}
 
 	[XmlRoot(ElementName = "BloodPressure")]
@@ -861,7 +861,7 @@ namespace PDF.Layout
 		public string BPUnit { get; set; }
 
 		[XmlElement(ElementName = "Date")]
-		public DateTime Date { get; set; }
+		public DateTime? Date { get; set; }
 	}
 
 	[XmlRoot(ElementName = "CareElements")]
@@ -883,7 +883,7 @@ namespace PDF.Layout
 	{
 
 		[XmlElement(ElementName = "FullDate")]
-		public DateTime FullDate { get; set; }
+		public DateTime? FullDate { get; set; }
 	}
 
 	[XmlRoot(ElementName = "AlertsAndSpecialNeeds")]

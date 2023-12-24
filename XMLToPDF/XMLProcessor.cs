@@ -23,44 +23,52 @@ namespace XMLToPDF
             //Deserializing XML
             Console.WriteLine("Deserializing XML file");
             XmlSerializer serializer = new XmlSerializer(typeof(OmdCds));
-            using (Stream reader = new FileStream(xmlPath, FileMode.Open))
+            try
             {
-                var model = serializer.Deserialize(reader) as OmdCds;
-                //Convert Resources
-                Console.WriteLine("Converting TIF and PDF resources");
-                foreach (var report in model.PatientRecord.ReportsReceived)
+                using (Stream reader = new FileStream(xmlPath, FileMode.Open))
                 {
-                    if (report.FileExtensionAndVersion == ".TIF")
+                    var model = serializer.Deserialize(reader) as OmdCds;
+                    //Convert Resources
+                    Console.WriteLine("Converting TIF and PDF resources");
+                    foreach (var report in model.PatientRecord.ReportsReceived)
                     {
-                        try
+                        if (report.FileExtensionAndVersion == ".TIF")
                         {
-                            report.Content.Media = ResourceHelpers.ConvertTiffToJpeg(report.Content.Media);
+                            try
+                            {
+                                report.Content.Media = ResourceHelpers.ConvertTiffToJpeg(report.Content.Media);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex);
+                                report.Content.Media = null;
+                            }
                         }
-                        catch (Exception ex)
+                        else if (report.FileExtensionAndVersion == ".pdf")
                         {
-                            Console.WriteLine(ex);
-                            report.Content.Media = null;
+                            try
+                            {
+                                report.Content.PDFPages = ResourceHelpers.ConvertPDFToJpegs(report.Content.Media);
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex);
+                                report.Content.Media = null;
+                            }
                         }
                     }
-                    else if (report.FileExtensionAndVersion == ".pdf")
-                    {
-                        try
-                        {
-                            report.Content.PDFPages = ResourceHelpers.ConvertPDFToJpegs(report.Content.Media);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex);
-                            report.Content.Media = null;
-                        }
-                    }
+
+                    //Generate SourceMaps
+                    Console.WriteLine("Generating Sourcemaps");
+                    var html = await RazorTemplateEngine.RenderAsync("/Theme.cshtml", model);
+
+                    PDFEngine.Generate(html, pdfPath);
                 }
-
-                //Generate SourceMaps
-                Console.WriteLine("Generating Sourcemaps");
-                var html = await RazorTemplateEngine.RenderAsync("/Theme.cshtml", model);
-
-                PDFEngine.Generate(html, pdfPath);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException);
+                throw;
             }
         }
     }

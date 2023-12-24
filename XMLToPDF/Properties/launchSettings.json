@@ -2,7 +2,7 @@
   "profiles": {
     "XMLToPDF": {
       "commandName": "Project",
-      "commandLineArgs": "--xml-path=\"D:\\Kalin\\Zip1\\Test\\(BERT) ALBERTUS_VANDERHULST_4371_20071953.xml\" --pdf-path=\"D:\\Kalin\\Zip1\\Test\\(BERT) ALBERTUS_VANDERHULST_4371_20071953.xml.pdf\""
+      "commandLineArgs": "--xml-path=\"D:\\Kalin\\Milestone 5\\Assunta_Fiorino_2284_20101939.xml\" --pdf-path=\"D:\\Kalin\\Milestone 5\\Output\\Assunta_Fiorino_2284_20101939.pdf\""
     }
   }
 }

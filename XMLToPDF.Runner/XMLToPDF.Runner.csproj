@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.48.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="gsdll64.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

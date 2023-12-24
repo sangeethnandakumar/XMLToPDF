@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "XMLToPDF.Runner": {
+      "commandName": "Project",
+      "commandLineArgs": "--xmlPath \"D:\\Kalin\\Milstone1\\Error\\ANNEMARIE_MANNERING_3558_25071955.xml\" --pdfPath \"D:\\Kalin\\Milstone1\\Error\\ANNEMARIE_MANNERING_3558_25071955.pdf\" "
+    }
+  }
+}

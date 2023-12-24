@@ -400,10 +400,10 @@
 
             <div class="contact-info">
                 <span class="email">DOB: </span>
-                <span class="email-val">@Demographics.DateOfBirth.ToLongDateString()</span>
+                <span class="email-val">@Demographics.DateOfBirth</span>
                 <span class="separator"></span>
                 <span class="phone">Person Status Date: </span>
-                <span class="phone-val">@Demographics.PersonStatusDate.ToLongDateString()</span>
+                <span class="phone-val">@Demographics.PersonStatusDate</span>
             </div>
 
 
@@ -422,7 +422,7 @@
                     </tr>
                     <tr>
                         <td>Expiry</td>
-                        <td>@Demographics.HealthCard?.Expirydate.ToLongDateString()</td>
+                        <td>@Demographics.HealthCard?.Expirydate?.ToLongDateString()</td>
                     </tr>
                     <tr>
                         <td>Card Version</td>
@@ -518,10 +518,10 @@
                             var problemLists = Model.PatientRecord.ProblemList;
                             @foreach (var problemList in problemLists)
                             {
-                                <h2>Problem Diagnosis Description (<i>OnSet Date: @problemList.OnsetDate.FullDate.ToShortDateString()</i>): </h2>
-                                <h3>OnSet Date: @problemList.OnsetDate.FullDate.ToShortDateString()</h3>
-                                <h3>Problem Status: @problemList.ProblemStatus</h3>
-                                var problemDiagnosisDescription = problemList.ProblemDiagnosisDescription.Split("; "); ;
+                                <h2>Problem Diagnosis Description (<i>OnSet Date: @problemList?.OnsetDate?.FullDate?.ToShortDateString()</i>): </h2>
+                                <h3>OnSet Date: @problemList?.OnsetDate?.FullDate?.ToShortDateString()</h3>
+                                <h3>Problem Status: @problemList?.ProblemStatus</h3>
+                                var problemDiagnosisDescription = problemList?.ProblemDiagnosisDescription?.Split("; "); ;
                                 <ul>
                                     @foreach (var line in problemDiagnosisDescription)
                                     {
@@ -561,7 +561,7 @@
                             </table>
                             <h2>Property Of Offending Agent:</h2>
                             <p>@allergy.PropertyOfOffendingAgent</p>
-                            <h3>Date: @allergy.RecordedDate.FullDate.ToLongDateString()</h3>
+                            <h3>Date: @allergy.RecordedDate.FullDate?.ToLongDateString()</h3>
                         }
                     </div>
                 </section>
@@ -652,7 +652,7 @@
                                     </tr>
                                     <tr>
                                         <td>Immunization Date</td>
-                                        <td>@immunization.Date.FullDate.ToLongDateString()</td>
+                                        <td>@immunization.Date.FullDate?.ToLongDateString()</td>
                                     </tr>
                                 </table>
                                 <table>
@@ -713,7 +713,7 @@
                                     {
                                         <tr>
                                             <td>Collection At</td>
-                                            <td>@laboratoryResult.CollectionDateTime.FullDateTime.ToLongDateString()</td>
+                                            <td>@laboratoryResult.CollectionDateTime.FullDateTime?.ToLongDateString()</td>
                                         </tr>
                                     }
                                     else{
@@ -736,7 +736,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Reviewed On</td>
-                                                    <td>@laboratoryResult.ResultReviewer?.DateTimeResultReviewed.FullDateTime.ToLongDateString()</td>
+                                                    <td>@laboratoryResult.ResultReviewer?.DateTimeResultReviewed.FullDateTime?.ToLongDateString()</td>
                                                 </tr>
                                             </table>
                                         </td>
@@ -788,7 +788,7 @@
                                     </tr>
                                     <tr>
                                         <td>Appoinment Date</td>
-                                        <td>@appt.AppointmentDate.FullDate.ToLongDateString()</td>
+                                        <td>@appt.AppointmentDate.FullDate?.ToLongDateString()</td>
                                     </tr>
                                     <tr>
                                         <td>Provider</td>
@@ -887,7 +887,7 @@
                                 <h2>Source Facility: @report.SourceFacility</h2>
                                 @if (!report.ReceivedDateTime.FullDateTime.Equals(default(DateTime)))
                                 {
-                                    <h3>Report Received: @report.ReceivedDateTime.FullDateTime.ToLongDateString()</h3>
+                                    <h3>Report Received: @report.ReceivedDateTime.FullDateTime?.ToLongDateString()</h3>
                                 }
                                 <h3>Reviewed By: @report.ReportReviewed?.Name?.FirstName @report.ReportReviewed?.Name?.LastName</h3>
                                 <hr />
@@ -905,7 +905,7 @@
                                     <span class="code">(PDF Document)</span>
                                 </div>
                                 <h2>Source Facility: @report.SourceFacility</h2>
-                                <h3>Report Received: @report?.ReceivedDateTime?.FullDateTime.ToLongDateString()</h3>
+                                <h3>Report Received: @report?.ReceivedDateTime?.FullDateTime?.ToLongDateString()</h3>
                                 <h3>Reviewed By: @report.ReportReviewed?.Name?.FirstName @report.ReportReviewed?.Name?.LastName</h3>
                                 <hr />
                                 @foreach (var pdfPage in report.Content.PDFPages)
@@ -948,7 +948,7 @@
                                     <tr>
                                         <td>@weight.Weight</td>
                                         <td>@weight.WeightUnit</td>
-                                        <td>@weight.Date.ToLongDateString()</td>
+                                        <td>@weight.Date?.ToLongDateString()</td>
                                     </tr>
                                 }
                             </table>
@@ -969,7 +969,7 @@
                                     <tr>
                                         <td>@height.Height</td>
                                         <td>@height.HeightUnit</td>
-                                        <td>@height.Date.ToLongDateString()</td>
+                                        <td>@height.Date?.ToLongDateString()</td>
                                     </tr>
                                 }
                             </table>
@@ -978,7 +978,7 @@
                             var bloodPressure = Model.PatientRecord.CareElements.BloodPressure;
                             <table>
                                 <col style="width: 40%;" />
-                                <col style="width: 40%;" />
+                                <col style="width: 20%;" />
                                 <col style="width: 20%;" />
                                 <tr>
                                     <td>Systolic BP</td>
@@ -992,7 +992,7 @@
                                         <td>@bp.SystolicBP</td>
                                         <td>@bp.DiastolicBP</td>
                                         <td>@bp.BPUnit</td>
-                                        <td>@bp.Date.ToLongDateString()</td>
+                                        <td>@bp.Date?.ToLongDateString()</td>
                                     </tr>
                                 }
                             </table>
@@ -1013,7 +1013,7 @@
                             {
                                 @if (alert.DateActive != null)
                                 {
-                                    <h2>@alert.DateActive.FullDate.ToLongDateString()</h2>
+                                    <h2>@alert.DateActive.FullDate?.ToLongDateString()</h2>
                                 }
                                 @if (alert.CategorySummaryLine != null)
                                 {
